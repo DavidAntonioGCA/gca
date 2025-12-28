@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GCA Networks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <span class="brand-left">GCA</span>
+    <span class="brand-right">Networks</span>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-desc">
+      GCA Networks es una marca especializada en redes, sistemas y soluciones tecnológicas a tu medida y presupuesto.
+      Ayudamos a negocios, emprendimientos y personas a construir infraestructura estable, segura y 
+      funcional, enfocándonos en lo que realmente importa y evitando complicaciones innecesarias.
+    </p>
+
+    <a href="https://wa.me/522282282131" class="btn-whatsapp">
+      Contactános
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <h2>Soluciones prácticas</h2>
+  <p class="subtitle">Servicios claros, útiles y fáciles de contratar</p>
+
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="card">
+          <h3>Optimización de Wi-Fi</h3>
+          <p>Mejora real de cobertura y estabilidad para hogares y negocios.</p>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="card">
+          <h3>Instalación y soporte</h3>
+          <p>Routers, equipos, puntos de venta, office y sistemas operativos correctamente configurados.</p>
+        </div>
+      </div>
+
+      <div class="swiper-slide">
+        <div class="card">
+          <h3>Páginas web profesionales</h3>
+          <p>Sitios web funcionales, rápidos y pensados para negocios, emprendimientos y clientes reales.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<section class="section alt">
+  <h2>Servicios profesionales</h2>
+  <p class="subtitle">Desliza para conocer nuestras soluciones</p>
+
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="card pro">
+          <h3>Servidores</h3>
+          <p>Administración de servicios, usuarios, seguridad y mantenimiento.</p>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="card pro">
+          <h3>Pentesting básico</h3>
+          <p>Evaluaciones de seguridad iniciales para detectar configuraciones débiles.</p>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="card pro">
+          <h3>Redes</h3>
+          <p>VPN, segmentación, enrutamiento y soluciones escalables.</p>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="card pro">
+          <h3>Cloud y virtualización</h3>
+          <p>Infraestructura en la nube con enfoque práctico y controlado.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<section class="section trust">
+  <h2>¿Por qué GCA Networks?</h2>
+  <p>
+    Trabajo directo, sin exageraciones ni promesas vacías.  
+    Tecnología pensada, implementada y documentada correctamente.
+  </p>
+</section>
+
+<footer>
+  <p>© 2025 · GCA Networks</p>
+</footer>
+
+<a href="https://wa.me/522282282131" class="whatsapp">WhatsApp</a>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  /**
+   * Inicialización global de todos los carruseles con clase .mySwiper.
+   * Al usar el mismo nombre de clase, Swiper aplicará la configuración 
+   * de forma independiente a cada sección.
+   */
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      640: { slidesPerView: 2 },
+      1024: { slidesPerView: 3 },
+    },
+  });
+</script>
+
+</body>
+</html>

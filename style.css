@@ -1,0 +1,141 @@
+/* --- ESTILOS BASE --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background: #f8fafc;
+  color: #0f172a;
+  line-height: 1.6;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+  background: #020617;
+  color: #fff;
+  padding: 60px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+}
+
+.brand-left { font-size: 3.5rem; line-height: 1; font-weight: 800; }
+.brand-right { font-size: 1.8rem; color: #0ea5e9; font-weight: 400; margin-top: -5px; }
+.hero-content { max-width: 700px; margin-top: 20px; }
+
+/* --- BOTÓN WHATSAPP --- */
+.btn-whatsapp {
+  display: inline-block;
+  margin-top: 30px;
+  background: #22c55e;
+  color: #fff;
+  padding: 16px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.btn-whatsapp:hover {
+  background: transparent;
+  border-color: #22c55e;
+  color: #22c55e;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+/* --- SECCIONES --- */
+.section {
+  max-width: 1100px;
+  margin: auto;
+  padding: 90px 20px;
+}
+
+.section h2 { text-align: center; font-size: 2.2rem; margin-bottom: 10px; }
+.subtitle { text-align: center; margin-bottom: 50px; color: #475569; }
+.alt { background: #f1f5f9; }
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+  background: #fff;
+  padding: 35px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  transition: transform .25s ease, box-shadow .25s ease;
+  height: 100%; /* Asegura que todas las tarjetas midan lo mismo en el carrusel */
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+}
+
+.card h3 { margin-bottom: 12px; font-size: 1.15rem; }
+.card p { color: #475569; }
+
+.pro { border-left: 4px solid #0ea5e9; }
+
+/* --- CONFIGURACIÓN DE SWIPER --- */
+.swiper {
+  width: 100%;
+  padding: 20px 0 60px; /* Espacio para paginación */
+}
+
+.swiper-slide {
+  height: auto; /* Permite que el slide use la altura de la tarjeta */
+}
+
+/* ELIMINACIÓN DEL CÍRCULO OVALADO / FONDO DE LAS FLECHAS */
+.swiper-button-next, .swiper-button-prev {
+  background: none !important; /* Quita el fondo blanco */
+  box-shadow: none !important;  /* Quita la sombra circular */
+  width: auto !important;       /* Evita que el contenedor ocupe espacio innecesario */
+  height: auto !important;
+}
+
+:root {
+  --swiper-theme-color: #0ea5e9; /* Color de flechas y puntos */
+  --swiper-navigation-size: 25px; /* Tamaño de la flecha */
+}
+
+/* --- FOOTER Y CONFIANZA --- */
+.trust { text-align: center; background: #ffffff; }
+.trust p { max-width: 700px; margin: 20px auto 0; color: #334155; }
+
+footer {
+  background: #020617;
+  color: #94a3b8;
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9rem;
+}
+
+/* BOTÓN FLOTANTE */
+.whatsapp {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #22c55e;
+  color: #020617;
+  padding: 14px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  z-index: 1000;
+}
