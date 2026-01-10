@@ -10,9 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/css/style.css?v=1">
-<script src="assets/js/main.js?v=1" defer></script>
-
-  
+<script src="assets/js/main.js?v=1" defer></script>  
 </head>
 <body>
 
@@ -224,10 +222,16 @@
       };
 
       try {
-      const response = await fetch('/api/contact', {
+const response = await fetch('/api/contact', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(payload)
+  body: JSON.stringify({
+    name: document.getElementById('nombre').value,
+    business: document.getElementById('negocio-form').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('telefono').value,
+    message: document.getElementById('mensaje').value
+  })
 });
 
 
