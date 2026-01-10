@@ -7,6 +7,11 @@ const app = express();
 app.use(express.json({ limit: '1mb' }));
 
 // CORS simple (por si algún día pegas desde otro dominio)
+const allowed = new Set([
+  'https://gcanetworks.com',
+  'https://www.gcanetworks.com'
+]);
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://gcanetworks.com');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
@@ -44,3 +49,4 @@ app.listen(PORT, '127.0.0.1', () => {
   console.log(`GCA API listening on http://127.0.0.1:${PORT}`);
 });
 EOF
+
