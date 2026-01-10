@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Swiper CSS -->
+  <!-- Swiper CSS (NECESARIO para que se vea bien el slider) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <!-- Site CSS -->
@@ -18,11 +18,14 @@
 </head>
 
 <body>
-  <nav class="apple-nav">
+
+  <nav class="apple-nav" aria-label="Navegación principal">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">GCA</a>
-      <ul class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
+      <a href="index.html" class="nav-logo" aria-label="GCA Networks - Inicio">GCA</a>
+
+      <!-- Si luego quieres menú móvil, agrega el botón y IDs; por ahora no rompe nada -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-current="page">Inicio</a></li>
         <li><a href="emprendimientos.html">Emprendimientos</a></li>
         <li><a href="profesionales.html">Servicios Profesionales</a></li>
         <li><a href="tecnico.html">Soluciones Técnicas</a></li>
@@ -56,6 +59,7 @@
 
     <div class="swiper">
       <div class="swiper-wrapper">
+
         <div class="swiper-slide">
           <div class="card">
             <h3>Optimización de Wi-Fi</h3>
@@ -76,11 +80,12 @@
             <p>Sitios web funcionales, rápidos y pensados para negocios, emprendimientos y clientes reales.</p>
           </div>
         </div>
+
       </div>
 
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next" aria-label="Siguiente"></div>
+      <div class="swiper-button-prev" aria-label="Anterior"></div>
+      <div class="swiper-pagination" aria-label="Paginación"></div>
     </div>
   </section>
 
@@ -90,6 +95,7 @@
 
     <div class="swiper">
       <div class="swiper-wrapper">
+
         <div class="swiper-slide">
           <div class="card pro">
             <h3>Servidores Linux</h3>
@@ -117,11 +123,12 @@
             <p>Infraestructura en la nube con enfoque práctico y controlado.</p>
           </div>
         </div>
+
       </div>
 
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next" aria-label="Siguiente"></div>
+      <div class="swiper-button-prev" aria-label="Anterior"></div>
+      <div class="swiper-pagination" aria-label="Paginación"></div>
     </div>
   </section>
 
@@ -173,7 +180,13 @@
       <div class="form-container">
         <h3>¡Nosotros te contactamos!</h3>
 
-        <form id="contact-form">
+        <form id="contact-form" novalidate>
+          <!-- Honeypot anti-spam (tu main.js lo lee si existe) -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="form-group">
             <label for="nombre">Nombre completo *</label>
             <input type="text" id="nombre" name="nombre" placeholder="Ej. Miguel Murrieta" required />
@@ -201,6 +214,9 @@
             <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos brevemente tu proyecto o problema técnico..."></textarea>
           </div>
 
+          <!-- Status (tu main.js lo usa si existe) -->
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+
           <button type="submit" class="btn-submit">Enviar mi información</button>
         </form>
       </div>
@@ -211,10 +227,10 @@
     <p>© 2025 · GCA Networks</p>
   </footer>
 
-  <!-- Swiper JS -->
+  <!-- Swiper JS (DEBE IR ANTES de main.js para que window.Swiper exista) -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-  <!-- Tu JS (maneja swiper + formulario) -->
+  <!-- Tu JS (Swiper + Form) -->
   <script src="assets/js/main.js?v=1" defer></script>
 </body>
 </html>
