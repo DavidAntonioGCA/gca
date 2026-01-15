@@ -485,3 +485,9 @@ footer{
   padding: 22px;
   font-size: 0.9rem;
 }
+.accent{
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
