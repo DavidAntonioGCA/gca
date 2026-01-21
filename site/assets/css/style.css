@@ -442,6 +442,15 @@ footer{
   .card:hover, .price-card:hover {
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
   }
+  .nav-links a {
+  color: #ffffff;
+  opacity: 0.9;
+}
+.nav-links a:hover {
+  color: var(--brand);
+  opacity: 1;
+}
+
 
 
 }
