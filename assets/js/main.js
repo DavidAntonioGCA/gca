@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.getElementById('navLinks');
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
+      console.log("click menu ✅");
       const expanded = navToggle.getAttribute('aria-expanded') === 'true';
       navToggle.setAttribute('aria-expanded', (!expanded).toString());
       navLinks.classList.toggle('is-open');
