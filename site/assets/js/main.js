@@ -8,6 +8,8 @@
 */
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log("main.js cargado ✅");
+
   // Toggle de navegación para móviles
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
