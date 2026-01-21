@@ -4,14 +4,11 @@
   <meta charset="UTF-8">
   <title>GCA Networks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-  <!-- Site CSS: usa tu propio archivo en assets/css/style.css -->
-  <link rel="stylesheet" href="assets/css/style.css?v=1">
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
 </head>
 <body>
   <!-- Navegación principal -->
@@ -22,11 +19,10 @@
         ☰ <span style="font-weight:700;">Menú</span>
       </button>
       <ul id="navLinks" class="nav-links">
-<ul id="navLinks" class="nav-links">
-  <li><a href="index.html">Inicio</a></li>
-  <li><a href="index.html#servicios">Servicios</a></li>
-  <li><a href="#contacto" class="nav-cta">Contacto</a></li>
-</ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -36,18 +32,18 @@
       <span class="brand-left">GCA</span>
       <span class="brand-right">Networks</span>
     </div>
-   <div class="hero-content">
-  <h1>
-    Tecnología que <span class="accent">impulsa tu negocio</span>
-  </h1>
-  <p class="hero-desc">
-    En GCA Networks construimos infraestructura estable, segura y funcional,
-    enfocándonos en lo que realmente importa y evitando complicaciones innecesarias.
-  </p>
-<a href="https://wa.me/522282282131" class="hero-cta" rel="noopener">
-  Contáctanos
-</a>
-</div>
+    <div class="hero-content">
+      <h1>
+        Tecnología que <span class="accent">impulsa tu negocio</span>
+      </h1>
+      <p class="hero-desc">
+        En GCA Networks construimos infraestructura estable, segura y funcional,
+        enfocándonos en lo que realmente importa y evitando complicaciones innecesarias.
+      </p>
+      <a href="https://wa.me/522282282131" class="hero-cta" rel="noopener">
+        Contáctanos
+      </a>
+    </div>
   </header>
 
   <!-- Sección de servicios destacados -->
@@ -88,7 +84,7 @@
   </section>
 
   <!-- Selector de planes -->
-  <section class="section alt">
+  <section id="servicios" class="section alt">
     <h2>Encuentra el plan ideal</h2>
     <p class="subtitle">Selecciona tu perfil para ver paquetes y soluciones a tu medida</p>
     <div class="pricing-selector">
@@ -99,7 +95,7 @@
         <a href="web.html" class="btn-outline">Ver paquetes</a>
       </div>
       <div class="price-card highlight">
-        <div class="price-icon">👔</div>
+        <div class="price-icon">💼</div>
         <h3>Profesionales</h3>
         <p>Para marcas personales y servicios que requieren una imagen digital de alto nivel.</p>
         <a href="soporte.html" class="btn-outline light">Ver paquetes profesionales</a>
@@ -120,7 +116,7 @@
   </section>
 
   <!-- Sección de contacto y formulario -->
-  <section class="section alt">
+  <section id="contacto" class="section alt">
     <div class="trust-container" style="text-align: center;">
       <h2>¿No encuentras lo que necesitas?</h2>
       <p class="subtitle" style="max-width: 800px; margin: 0 auto 30px;">
@@ -132,9 +128,7 @@
       </div>
       <div class="form-container">
         <h3>¡Nosotros te contactamos!</h3>
-        <!-- Define una acción predeterminada para que el formulario funcione con tu API. Reemplaza la URL con tu endpoint real. -->
         <form id="contact-form" action="https://gcanetworks.com/api/contacto" method="POST" novalidate>
-          <!-- Honeypot anti-spam -->
           <div class="hp-field" aria-hidden="true">
             <label for="website">Website</label>
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
@@ -168,14 +162,11 @@
     </div>
   </section>
 
-  <!-- Pie de página -->
   <footer>
     <p>© 2026 · GCA Networks</p>
   </footer>
 
-  <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- JS del sitio -->
-  <script src="assets/js/main.js?v=1" defer></script>
+  <script src="assets/js/main.js?v=2" defer></script>
 </body>
 </html>
