@@ -450,7 +450,7 @@ footer{
   color: var(--brand);
   opacity: 1;
 }
-
-
-
+.form-container h3 {
+  color: #ffffff;
+}
 }
