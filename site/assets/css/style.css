@@ -558,3 +558,52 @@ footer{
 }
 .price-card .btn-outline:active{ transform: translateY(1px); }
 
+/* Mobile: cards más compactas + swipe con "peek" */
+@media (max-width: 768px) {
+  .pricing-selector{
+    display: flex;
+    overflow-x: auto;
+    gap: 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 16px 14px;
+  }
+
+  .price-card{
+    flex: 0 0 78%;
+    scroll-snap-align: center;
+    padding: 18px 16px;          /* antes era demasiado */
+    border-radius: 18px;
+  }
+
+  .price-icon{
+    font-size: 2.1rem;           /* más compacto */
+    margin-bottom: 10px;
+  }
+
+  .price-card h3{
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .price-card p{
+    margin-bottom: 14px;
+    min-height: 0;               /* quita el “hueco” que tenías */
+    font-size: 0.95rem;
+    line-height: 1.35;
+    display: -webkit-box;        /* recorta texto bonito */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .price-card .btn-outline{
+    display: inline-flex;
+    margin: 0 auto;              /* sube el botón */
+    padding: 11px 16px;
+    font-weight: 800;
+  }
+
+  .pricing-selector::-webkit-scrollbar{ display: none; }
+}
+
