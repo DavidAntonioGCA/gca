@@ -526,4 +526,24 @@ footer{
 .hero-cta:active{
   transform: translateY(0);
 }
+/* Swipe horizontal para selector de planes en móvil */
+@media (max-width: 768px) {
+  .pricing-selector{
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 6px 14px;
+  }
+
+  .price-card{
+    min-width: 85%;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+  }
+
+  .pricing-selector::-webkit-scrollbar{ display: none; }
+}
+
 
