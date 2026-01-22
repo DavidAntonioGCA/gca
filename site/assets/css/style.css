@@ -454,3 +454,84 @@ footer{
   color: #ffffff;
 }
 }
+
+
+
+.plan-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+  gap: 18px;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+}
+
+.plan-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.plan-card .price {
+  font-size: 1.3rem;
+  color: var(--brand);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.plan-card .plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.plan-card .plan-features li::before {
+  content: "✓";
+  color: var(--brand-2);
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.plan-card .btn {
+  margin-top: auto;
+}
+
+/* Badge destacado */
+.plan-card.popular {
+  border: 2px solid var(--brand);
+  position: relative;
+}
+
+.plan-card.popular .badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+/* Badge opcional o pequeño */
+.badge.small {
+  background: var(--border);
+  color: var(--muted-light);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
