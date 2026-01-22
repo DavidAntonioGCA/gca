@@ -1,5 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Toggle de navegación para móviles
+
+  // =========================
+  // Helpers (SIEMPRE ARRIBA)
+  // =========================
+  const API_DEFAULT = 'https://gcanetworks.com/api/contacto';
+
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  const validatePhone10 = (phone) => /^\d{10}$/.test(phone);
+
+  const forcePhone10Digits = (inputEl) => {
+    if (!inputEl) return;
+    inputEl.addEventListener('input', () => {
+      inputEl.value = inputEl.value.replace(/\D/g, '').slice(0, 10);
+    });
+  };
+
+  const setStatus = (el, msg, ok) => {
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = ok ? '' : 'red';
+  };
+
+  // Aplica filtros (si existen inputs en la página)
+  forcePhone10Digits(document.getElementById('telefono'));         // contacto (index)
+  forcePhone10Digits(document.getElementById('cotizar-telefono')); // modal cotizar (web/soporte/etc)
+
+  // =========================
+  // Toggle navegación móvil
+  // =========================
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
   if (navToggle && navLinks) {
@@ -9,11 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('is-open');
     });
   }
-  forcePhone10Digits(document.getElementById('telefono'));
-forcePhone10Digits(document.getElementById('cotizar-telefono'));
 
-
-  // Inicializar Swiper solo si existe en la página
+  // =========================
+  // Swiper (si existe)
+  // =========================
   if (typeof Swiper !== 'undefined') {
     const swiperEl = document.querySelector('.swiper');
     if (swiperEl) {
@@ -37,76 +64,63 @@ forcePhone10Digits(document.getElementById('cotizar-telefono'));
       });
     }
   }
-const API_DEFAULT = 'https://gcanetworks.com/api/contacto';
-const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-const validatePhone10 = (phone) => /^\d{10}$/.test(phone);
 
-const forcePhone10Digits = (inputEl) => {
-  if (!inputEl) return;
-  inputEl.addEventListener('input', () => {
-    inputEl.value = inputEl.value.replace(/\D/g, '').slice(0, 10);
-  });
-};
-
-// esto muestra mensajes bonitos (rojo/verde)
-const setStatus = (el, msg, ok) => {
-  if (!el) return;
-  el.textContent = msg;
-  el.style.color = ok ? '' : 'red';
-};
-
-
-  // Manejador de envío de formulario de contacto (sección contacto en index)
+  // =========================
+  // Form contacto (index)
+  // =========================
   const form = document.getElementById('contact-form');
   if (form) {
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const statusEl = document.getElementById('form-status');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const statusEl = document.getElementById('form-status');
 
-  const nombre = form.querySelector('[name="nombre"]')?.value.trim();
-  const negocio = form.querySelector('[name="negocio"]')?.value.trim();
-  const email = form.querySelector('[name="email"]')?.value.trim();
-  const telefono = form.querySelector('[name="telefono"]')?.value.trim();
+      const nombre = form.querySelector('[name="nombre"]')?.value.trim();
+      const negocio = form.querySelector('[name="negocio"]')?.value.trim();
+      const email = form.querySelector('[name="email"]')?.value.trim();
+      const telefono = form.querySelector('[name="telefono"]')?.value.trim();
 
-  if (!nombre || !negocio || !email || !telefono) {
-    setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
-    return;
+      if (!nombre || !negocio || !email || !telefono) {
+        setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
+        return;
+      }
+      if (!validateEmail(email)) {
+        setStatus(statusEl, 'Correo no válido.', false);
+        return;
+      }
+      if (!validatePhone10(telefono)) {
+        setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos (solo números).', false);
+        return;
+      }
+
+      setStatus(statusEl, 'Enviando...', true);
+
+      try {
+        const API_URL = form.getAttribute('action') || API_DEFAULT;
+        const formData = new FormData(form);
+
+        const response = await fetch(API_URL, { method: 'POST', body: formData });
+        const data = await response.json().catch(() => null);
+
+        if (response.ok && data?.ok) {
+          form.reset();
+          setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
+        } else {
+          setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
+          console.error('Error formulario contacto:', data);
+        }
+      } catch (err) {
+        setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
+        console.error(err);
+      }
+    });
   }
-  if (!validateEmail(email)) {
-    setStatus(statusEl, 'Correo no válido.', false);
-    return;
-  }
-  if (!validatePhone10(telefono)) {
-    setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos (solo números).', false);
-    return;
-  }
 
-  setStatus(statusEl, 'Enviando...', true);
-
-  try {
-    const API_URL = form.getAttribute('action') || API_DEFAULT;
-    const formData = new FormData(form);
-
-    const response = await fetch(API_URL, { method: 'POST', body: formData });
-    const data = await response.json().catch(() => null);
-
-    if (response.ok && data?.ok) {
-      form.reset();
-      setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
-    } else {
-      setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
-      console.error('Error:', data);
-    }
-  } catch (err) {
-    setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
-    console.error(err);
-  }
-});
-  }
-  
-  // Funcionalidad del modal "Cotizar"
+  // =========================
+  // Modal "Cotizar"
+  // =========================
   const cotizarModal = document.getElementById('cotizar-modal');
   const cotizarFormEl = document.getElementById('cotizar-form');
+
   if (cotizarModal && cotizarFormEl) {
     const cotizarButtons = document.querySelectorAll('.cotizar-btn');
     const closeBtn = cotizarModal.querySelector('.modal-close');
@@ -114,25 +128,21 @@ form.addEventListener('submit', async (e) => {
     let lastFocusedElement;
 
     const openCotizarModal = (name, price) => {
-      // Guardar el elemento activo para devolver el foco al cerrar
       lastFocusedElement = document.activeElement;
-      // Actualizar título y campo oculto con paquete seleccionado
+
       const titleEl = document.getElementById('cotizar-title');
       const packageField = cotizarFormEl.querySelector('[name="paquete"]');
-      if (titleEl) {
-        titleEl.textContent = `Cotizar ${name} - ${price}`;
-      }
-      if (packageField) {
-        packageField.value = `${name} - ${price}`;
-      }
-      // Mostrar modal
+
+      if (titleEl) titleEl.textContent = `Cotizar ${name} - ${price}`;
+      if (packageField) packageField.value = `${name} - ${price}`;
+
       cotizarModal.classList.add('open');
       cotizarModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden'; // Deshabilitar scroll de fondo
-      // Enfocar el primer campo del formulario (Nombre)
+      document.body.style.overflow = 'hidden';
+
       const nameInput = document.getElementById('cotizar-nombre');
       if (nameInput) nameInput.focus();
-      // Limpiar mensaje de estado previo (si lo hubiera)
+
       const statusEl = document.getElementById('cotizar-status');
       if (statusEl) statusEl.textContent = '';
     };
@@ -141,15 +151,13 @@ form.addEventListener('submit', async (e) => {
       cotizarModal.classList.remove('open');
       cotizarModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if (lastFocusedElement) lastFocusedElement.focus(); // Devolver foco al botón que abrió
+      if (lastFocusedElement) lastFocusedElement.focus();
     };
 
-    // Asignar evento de click a todos los botones "Cotizar"
     cotizarButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.card');
         if (card) {
-          // Obtener nombre del paquete y precio desde la tarjeta
           const packName = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
           const priceText = card.querySelector('p strong') ? card.querySelector('p strong').textContent.trim() : '';
           openCotizarModal(packName, priceText);
@@ -157,63 +165,59 @@ form.addEventListener('submit', async (e) => {
       });
     });
 
-    // Eventos para cerrar el modal (clic en "X" o en el overlay)
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeCotizarModal);
-    }
-    if (overlay) {
-      overlay.addEventListener('click', closeCotizarModal);
-    }
-    // Cerrar con tecla Escape
+    if (closeBtn) closeBtn.addEventListener('click', closeCotizarModal);
+    if (overlay) overlay.addEventListener('click', closeCotizarModal);
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && cotizarModal.classList.contains('open')) {
         closeCotizarModal();
       }
     });
 
-    // Manejador de envío del formulario de cotización
-   cotizarFormEl.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const statusEl = document.getElementById('cotizar-status');
+    // =========================
+    // Submit cotizar (modal)
+    // =========================
+    cotizarFormEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const statusEl = document.getElementById('cotizar-status');
 
-  const nombre = cotizarFormEl.querySelector('[name="nombre"]')?.value.trim();
-  const email = cotizarFormEl.querySelector('[name="email"]')?.value.trim();
-  const telefono = cotizarFormEl.querySelector('[name="telefono"]')?.value.trim();
+      const nombre = cotizarFormEl.querySelector('[name="nombre"]')?.value.trim();
+      const email = cotizarFormEl.querySelector('[name="email"]')?.value.trim();
+      const telefono = cotizarFormEl.querySelector('[name="telefono"]')?.value.trim();
 
-  if (!nombre || !email || !telefono) {
-    setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
-    return;
-  }
-  if (!validateEmail(email)) {
-    setStatus(statusEl, 'Correo no válido.', false);
-    return;
-  }
-  if (!validatePhone10(telefono)) {
-    setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos.', false);
-    return;
-  }
+      if (!nombre || !email || !telefono) {
+        setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
+        return;
+      }
+      if (!validateEmail(email)) {
+        setStatus(statusEl, 'Correo no válido.', false);
+        return;
+      }
+      if (!validatePhone10(telefono)) {
+        setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos (solo números).', false);
+        return;
+      }
 
-  setStatus(statusEl, 'Enviando...', true);
+      setStatus(statusEl, 'Enviando...', true);
 
-  try {
-    const API_URL = cotizarFormEl.getAttribute('action') || API_DEFAULT;
-    const formData = new FormData(cotizarFormEl);
+      try {
+        const API_URL = cotizarFormEl.getAttribute('action') || API_DEFAULT;
+        const formData = new FormData(cotizarFormEl);
 
-    const response = await fetch(API_URL, { method: 'POST', body: formData });
-    const data = await response.json().catch(() => null);
+        const response = await fetch(API_URL, { method: 'POST', body: formData });
+        const data = await response.json().catch(() => null);
 
-    if (response.ok && data?.ok) {
-      cotizarFormEl.reset();
-      setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
-    } else {
-      setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
-      console.error('Error:', data);
-    }
-  } catch (err) {
-    setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
-    console.error(err);
-  }
-});
-
+        if (response.ok && data?.ok) {
+          cotizarFormEl.reset();
+          setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
+        } else {
+          setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
+          console.error('Error formulario cotizar:', data);
+        }
+      } catch (err) {
+        setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
+        console.error(err);
+      }
+    });
   }
 });
