@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.classList.toggle('is-open');
     });
   }
+  forcePhone10Digits(document.getElementById('telefono'));
+forcePhone10Digits(document.getElementById('cotizar-telefono'));
+
 
   // Inicializar Swiper solo si existe en la página
   if (typeof Swiper !== 'undefined') {
@@ -34,52 +37,71 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+const API_DEFAULT = 'https://gcanetworks.com/api/contacto';
+const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+const validatePhone10 = (phone) => /^\d{10}$/.test(phone);
+
+const forcePhone10Digits = (inputEl) => {
+  if (!inputEl) return;
+  inputEl.addEventListener('input', () => {
+    inputEl.value = inputEl.value.replace(/\D/g, '').slice(0, 10);
+  });
+};
+
+// esto muestra mensajes bonitos (rojo/verde)
+const setStatus = (el, msg, ok) => {
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = ok ? '' : 'red';
+};
+
 
   // Manejador de envío de formulario de contacto (sección contacto en index)
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const statusEl = document.getElementById('form-status');
-      // Validación básica de campos obligatorios
-      const requiredFields = ['nombre', 'negocio', 'email', 'telefono'];
-      let valid = true;
-      requiredFields.forEach((name) => {
-        const input = form.querySelector(`[name="${name}"]`);
-        if (!input || !input.value.trim()) {
-          valid = false;
-        }
-      });
-      if (!valid) {
-        statusEl.textContent = 'Por favor, completa los campos obligatorios.';
-        statusEl.style.color = 'red';
-        return;
-      }
-      statusEl.textContent = 'Enviando...';
-      statusEl.style.color = '';
-      try {
-        const API_URL = form.getAttribute('action') || 'https://gcanetworks.com/api/contacto';
-        const formData = new FormData(form);
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          body: formData,
-        });
-        if (response.ok) {
-          form.reset();
-          statusEl.textContent = '¡Gracias! Pronto nos pondremos en contacto.';
-          statusEl.style.color = '';
-        } else {
-          const errorMsg = await response.text();
-          statusEl.textContent = 'Hubo un error al enviar. Por favor, intenta más tarde.';
-          statusEl.style.color = 'red';
-          console.error('Error al enviar el formulario:', errorMsg);
-        }
-      } catch (err) {
-        statusEl.textContent = 'Hubo un error al enviar. Por favor, intenta más tarde.';
-        statusEl.style.color = 'red';
-        console.error(err);
-      }
-    });
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const statusEl = document.getElementById('form-status');
+
+  const nombre = form.querySelector('[name="nombre"]')?.value.trim();
+  const negocio = form.querySelector('[name="negocio"]')?.value.trim();
+  const email = form.querySelector('[name="email"]')?.value.trim();
+  const telefono = form.querySelector('[name="telefono"]')?.value.trim();
+
+  if (!nombre || !negocio || !email || !telefono) {
+    setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
+    return;
+  }
+  if (!validateEmail(email)) {
+    setStatus(statusEl, 'Correo no válido.', false);
+    return;
+  }
+  if (!validatePhone10(telefono)) {
+    setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos (solo números).', false);
+    return;
+  }
+
+  setStatus(statusEl, 'Enviando...', true);
+
+  try {
+    const API_URL = form.getAttribute('action') || API_DEFAULT;
+    const formData = new FormData(form);
+
+    const response = await fetch(API_URL, { method: 'POST', body: formData });
+    const data = await response.json().catch(() => null);
+
+    if (response.ok && data?.ok) {
+      form.reset();
+      setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
+    } else {
+      setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
+      console.error('Error:', data);
+    }
+  } catch (err) {
+    setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
+    console.error(err);
+  }
+});
   }
   
   // Funcionalidad del modal "Cotizar"
@@ -150,57 +172,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Manejador de envío del formulario de cotización
-    cotizarFormEl.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const statusEl = document.getElementById('cotizar-status');
-      // Validación de campos requeridos (nombre, email, teléfono)
-      const requiredFields = ['nombre', 'email', 'telefono'];
-      let valid = true;
-      requiredFields.forEach((name) => {
-        const input = cotizarFormEl.querySelector(`[name="${name}"]`);
-        if (!input || !input.value.trim()) {
-          valid = false;
-        }
-      });
-      if (!valid) {
-        if (statusEl) {
-          statusEl.textContent = 'Por favor, completa los campos obligatorios.';
-          statusEl.style.color = 'red';
-        }
-        return;
-      }
-      if (statusEl) {
-        statusEl.textContent = 'Enviando...';
-        statusEl.style.color = '';
-      }
-      try {
-        const API_URL = cotizarFormEl.getAttribute('action') || 'https://gcanetworks.com/api/contacto';
-        const formData = new FormData(cotizarFormEl);
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          body: formData,
-        });
-        if (response.ok) {
-          cotizarFormEl.reset();
-          if (statusEl) {
-            statusEl.textContent = '¡Gracias! Pronto nos pondremos en contacto.';
-            statusEl.style.color = '';
-          }
-        } else {
-          const errorMsg = await response.text();
-          if (statusEl) {
-            statusEl.textContent = 'Hubo un error al enviar. Por favor, intenta más tarde.';
-            statusEl.style.color = 'red';
-          }
-          console.error('Error al enviar el formulario:', errorMsg);
-        }
-      } catch (err) {
-        if (statusEl) {
-          statusEl.textContent = 'Hubo un error al enviar. Por favor, intenta más tarde.';
-          statusEl.style.color = 'red';
-        }
-        console.error(err);
-      }
-    });
+   cotizarFormEl.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const statusEl = document.getElementById('cotizar-status');
+
+  const nombre = cotizarFormEl.querySelector('[name="nombre"]')?.value.trim();
+  const email = cotizarFormEl.querySelector('[name="email"]')?.value.trim();
+  const telefono = cotizarFormEl.querySelector('[name="telefono"]')?.value.trim();
+
+  if (!nombre || !email || !telefono) {
+    setStatus(statusEl, 'Por favor, completa los campos obligatorios.', false);
+    return;
+  }
+  if (!validateEmail(email)) {
+    setStatus(statusEl, 'Correo no válido.', false);
+    return;
+  }
+  if (!validatePhone10(telefono)) {
+    setStatus(statusEl, 'El teléfono debe tener exactamente 10 dígitos.', false);
+    return;
+  }
+
+  setStatus(statusEl, 'Enviando...', true);
+
+  try {
+    const API_URL = cotizarFormEl.getAttribute('action') || API_DEFAULT;
+    const formData = new FormData(cotizarFormEl);
+
+    const response = await fetch(API_URL, { method: 'POST', body: formData });
+    const data = await response.json().catch(() => null);
+
+    if (response.ok && data?.ok) {
+      cotizarFormEl.reset();
+      setStatus(statusEl, data.message || '✅ Enviado correctamente.', true);
+    } else {
+      setStatus(statusEl, data?.message || 'Hubo un problema. Intenta más tarde.', false);
+      console.error('Error:', data);
+    }
+  } catch (err) {
+    setStatus(statusEl, 'Hubo un problema. Intenta más tarde.', false);
+    console.error(err);
+  }
+});
+
   }
 });
