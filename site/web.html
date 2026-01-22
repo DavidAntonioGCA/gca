@@ -40,7 +40,6 @@
         <p class="subtitle">Elige un paquete y lo ajustamos a tus necesidades</p>
 
         <div class="grid cols-auto" role="list">
-
           <article class="card plan-card" role="listitem">
             <h3>Pack Start</h3>
             <p class="price"><strong>$2,000 MXN</strong></p>
@@ -52,7 +51,7 @@
               <li>Diseño responsivo y limpio</li>
               <li>Sitio publicado y manual PDF</li>
             </ul>
-            <a href="#contacto" class="btn btn-primary">Elegir plan</a>
+            <button class="btn btn-primary open-modal" data-plan="Pack Start" data-price="$2,000 MXN">Elegir plan</button>
           </article>
 
           <article class="card plan-card popular" role="listitem">
@@ -67,7 +66,7 @@
               <li>Formulario de contacto</li>
               <li>1 mes de soporte para ajustes</li>
             </ul>
-            <a href="#contacto" class="btn btn-primary">Elegir plan</a>
+            <button class="btn btn-primary open-modal" data-plan="Pack Crece" data-price="$3,500 MXN">Elegir plan</button>
           </article>
 
           <article class="card plan-card" role="listitem">
@@ -81,9 +80,8 @@
               <li>Panel de administración</li>
               <li>Diseño orientado a conversión</li>
             </ul>
-            <a href="#contacto" class="btn btn-primary">Elegir plan</a>
+            <button class="btn btn-primary open-modal" data-plan="Pack Vende" data-price="$5,500 MXN">Elegir plan</button>
           </article>
-
         </div>
 
         <div class="grid cols-auto" style="margin-top: 40px;" role="list">
@@ -95,7 +93,7 @@
               <li>Backups y monitoreo básico</li>
               <li>Soporte rápido y cercano</li>
             </ul>
-            <a href="#contacto" class="btn btn-outline">Cotizar</a>
+            <button class="btn btn-outline open-modal" data-plan="Mantenimiento Web" data-price="$300 MXN / mes">Cotizar</button>
           </article>
         </div>
 
@@ -105,8 +103,45 @@
       </div>
     </section>
   </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" hidden>
+    <div class="modal">
+      <button class="modal-close" aria-label="Cerrar">&times;</button>
+      <p class="badge">Plan seleccionado</p>
+      <h3 id="modal-plan">Nombre del plan</h3>
+      <p class="price" id="modal-price"></p>
+      <form id="plan-form">
+        <label>Nombre completo<input type="text" required></label>
+        <label>Correo electrónico<input type="email" required></label>
+        <label>Teléfono / WhatsApp<input type="tel" required></label>
+        <label>Cuéntanos sobre tu proyecto <small>(opcional)</small><textarea></textarea></label>
+        <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+      </form>
+      <p class="disclaimer">Al enviar, aceptas que te contactemos por los medios proporcionados.</p>
+    </div>
+  </div>
+
   <footer>
     <p>© 2026 · GCA Networks</p>
   </footer>
+
+  <script>
+    document.querySelectorAll('.open-modal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.modal-overlay').hidden = false;
+        document.getElementById('modal-plan').textContent = btn.dataset.plan;
+        document.getElementById('modal-price').textContent = btn.dataset.price;
+      });
+    });
+    document.querySelector('.modal-close').onclick = () => {
+      document.querySelector('.modal-overlay').hidden = true;
+    };
+    document.querySelector('.modal-overlay').addEventListener('click', e => {
+      if (e.target.classList.contains('modal-overlay')) {
+        e.currentTarget.hidden = true;
+      }
+    });
+  </script>
 </body>
 </html>
