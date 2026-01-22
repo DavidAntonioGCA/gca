@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=1">
-  <script src="assets/js/main.js?v=1" defer></script>
+  <link rel="stylesheet" href="assets/css/style.css?v=2">
+  <script src="assets/js/main.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -20,11 +20,11 @@
       <button id="navToggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks">
         ☰ <span style="font-weight:700;">Menú</span>
       </button>
-<ul id="navLinks" class="nav-links">
-  <li><a href="index.html">Inicio</a></li>
-  <li><a href="index.html#servicios">Servicios</a></li>
-  <li><a href="#contacto" class="nav-cta">Contacto</a></li>
-</ul>
+      <ul id="navLinks" class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#servicios">Servicios</a></li>
+        <li><a href="index.html#contacto" class="nav-cta">Contacto</a></li>
+      </ul>
     </div>
   </nav>
   <header class="hero">
@@ -42,43 +42,48 @@
           <article class="card" role="listitem">
             <h3>Wi‑Fi Booster (Diagnóstico y Mejora)</h3>
             <p><strong>Desde $600 MXN</strong></p>
-            <p>Diagnóstico de red Wi‑Fi</p>
-            <p>Revisión de canales e interferencias</p>
-            <p>Recomendaciones y configuración</p>
-            <p>Pruebas antes y después</p>
+            <p>✔ Diagnóstico de red Wi‑Fi</p>
+            <p>✔ Revisión de canales e interferencias</p>
+            <p>✔ Recomendaciones y configuración</p>
+            <p>✔ Pruebas antes y después</p>
+            <button type="button" class="btn btn-outline cotizar-btn">Cotizar</button>
           </article>
           <article class="card pro" role="listitem">
             <h3>Soporte Remoto Express</h3>
             <p><strong>$200 MXN por sesión</strong></p>
-            <p>30–60 minutos de asistencia remota</p>
-            <p>Problemas de software, red e impresoras</p>
-            <p>Windows o Linux básico</p>
-            <p>Reporte corto de lo realizado</p>
+            <p>✔ 30–60 minutos de asistencia remota</p>
+            <p>✔ Problemas de software, red e impresoras</p>
+            <p>✔ Windows o Linux básico</p>
+            <p>✔ Reporte corto de lo realizado</p>
+            <button type="button" class="btn btn-outline cotizar-btn">Cotizar</button>
           </article>
           <article class="card" role="listitem">
             <h3>Soporte Mensual para Negocios</h3>
             <p><strong>Desde $700 MXN / mes</strong></p>
-            <p>Bolsa de horas y respuesta rápida</p>
-            <p>Revisión mensual de equipos y parches</p>
-            <p>Checklist de salud (software, red, backups)</p>
-            <p>Bitácora de tickets y soluciones</p>
+            <p>✔ Bolsa de horas y respuesta rápida</p>
+            <p>✔ Revisión mensual de equipos y parches</p>
+            <p>✔ Checklist de salud (software, red, backups)</p>
+            <p>✔ Bitácora de tickets y soluciones</p>
+            <button type="button" class="btn btn-outline cotizar-btn">Cotizar</button>
           </article>
           <article class="card pro" role="listitem">
             <h3>Red Segura (Router / Firewall)</h3>
             <p><strong>Desde $1,500 MXN</strong></p>
-            <p>Segmentación de red (clientes / administración)</p>
-            <p>Configuración segura de router</p>
-            <p>DNS seguro y reglas básicas</p>
-            <p>Opcional: configuración de VPN</p>
+            <p>✔ Segmentación de red (clientes / administración)</p>
+            <p>✔ Configuración segura de router</p>
+            <p>✔ DNS seguro y reglas básicas</p>
+            <p>✔ Opcional: configuración de VPN</p>
+            <button type="button" class="btn btn-outline cotizar-btn">Cotizar</button>
           </article>
           <article class="card" role="listitem">
             <h3>Security Baseline</h3>
             <p><strong>Desde $1,200 MXN</strong></p>
-            <p>Revisión de router y Wi‑Fi</p>
-            <p>Evaluación de contraseñas y accesos</p>
-            <p>Comprobación de backups</p>
-            <p>Diagnóstico básico de exposición</p>
-            <p>Plan de mejora priorizado</p>
+            <p>✔ Revisión de router y Wi‑Fi</p>
+            <p>✔ Evaluación de contraseñas y accesos</p>
+            <p>✔ Comprobación de backups</p>
+            <p>✔ Diagnóstico básico de exposición</p>
+            <p>✔ Plan de mejora priorizado</p>
+            <button type="button" class="btn btn-outline cotizar-btn">Cotizar</button>
           </article>
         </div>
         <div style="text-align:center; margin-top: 28px;">
@@ -90,5 +95,42 @@
   <footer>
     <p>© 2026 · GCA Networks</p>
   </footer>
+  <!-- Modal de cotización -->
+  <div id="cotizar-modal" class="cotizar-modal" aria-hidden="true">
+    <div class="modal-overlay" tabindex="-1"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cotizar-title">
+      <button class="modal-close" aria-label="Cerrar">&times;</button>
+      <h3 id="cotizar-title">Cotizar paquete</h3>
+      <form id="cotizar-form" action="https://gcanetworks.com/api/contacto" method="POST" novalidate>
+        <!-- Campo oculto anti-spam (honeypot) -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="cotizar-website">Website</label>
+          <input type="text" id="cotizar-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <!-- Campo oculto para el paquete seleccionado -->
+        <input type="hidden" id="cotizar-paquete-input" name="paquete" value="">
+        <div class="form-group">
+          <label for="cotizar-nombre">Nombre *</label>
+          <input type="text" id="cotizar-nombre" name="nombre" required placeholder="Ej. Miguel Murrieta">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cotizar-email">Correo Electrónico *</label>
+            <input type="email" id="cotizar-email" name="email" required placeholder="tucorreo@ejemplo.com">
+          </div>
+          <div class="form-group">
+            <label for="cotizar-telefono">Teléfono *</label>
+            <input type="tel" id="cotizar-telefono" name="telefono" required placeholder="228 123 4567">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cotizar-mensaje">Mensaje</label>
+          <textarea id="cotizar-mensaje" name="mensaje" rows="4" placeholder="¿Tienes alguna duda o requerimiento especial?"></textarea>
+        </div>
+        <p id="cotizar-status" class="form-status" aria-live="polite"></p>
+        <button type="submit" class="btn-submit">Enviar</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
