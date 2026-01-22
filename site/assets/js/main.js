@@ -1,21 +1,9 @@
-/*
-  Funciones de interacción para GCA Networks
-
-  Este script controla el menú de navegación móvil, inicializa el componente
-  Swiper en la página de inicio y gestiona el envío del formulario de
-  contacto. Se ejecuta una vez que el DOM está listo gracias al uso del
-  atributo `defer` en la etiqueta <script>.
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("main.js cargado ✅");
-
   // Toggle de navegación para móviles
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
-        console.log("click menu ✅");
       const expanded = navToggle.getAttribute('aria-expanded') === 'true';
       navToggle.setAttribute('aria-expanded', (!expanded).toString());
       navLinks.classList.toggle('is-open');
@@ -47,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Manejador de envío de formulario de contacto
+  // Manejador de envío de formulario de contacto (sección contacto en index)
   const form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', async (e) => {
@@ -70,10 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
       statusEl.textContent = 'Enviando...';
       statusEl.style.color = '';
       try {
-        // Reemplaza `API_URL` con el endpoint real que utilizas para procesar el formulario.
-        // Si ya tienes la acción definida en el atributo `action` del formulario, este
-        // valor se tomará automáticamente; de lo contrario, puedes especificar aquí
-        // la URL de tu API o servicio de terceros (p. ej. Formspree, n8n, etc.).
         const API_URL = form.getAttribute('action') || 'https://gcanetworks.com/api/contacto';
         const formData = new FormData(form);
         const response = await fetch(API_URL, {
@@ -97,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
+  
   // Funcionalidad del modal "Cotizar"
   const cotizarModal = document.getElementById('cotizar-modal');
   const cotizarFormEl = document.getElementById('cotizar-form');
@@ -108,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastFocusedElement;
 
     const openCotizarModal = (name, price) => {
-      // Guardar el elemento activo para volver el foco al cerrar
+      // Guardar el elemento activo para devolver el foco al cerrar
       lastFocusedElement = document.activeElement;
       // Actualizar título y campo oculto con paquete seleccionado
       const titleEl = document.getElementById('cotizar-title');
@@ -122,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Mostrar modal
       cotizarModal.classList.add('open');
       cotizarModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';        // Deshabilitar scroll de fondo
+      document.body.style.overflow = 'hidden'; // Deshabilitar scroll de fondo
       // Enfocar el primer campo del formulario (Nombre)
       const nameInput = document.getElementById('cotizar-nombre');
       if (nameInput) nameInput.focus();
@@ -135,11 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
       cotizarModal.classList.remove('open');
       cotizarModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if (lastFocusedElement) lastFocusedElement.focus();  // Devolver foco al botón que abrió
+      if (lastFocusedElement) lastFocusedElement.focus(); // Devolver foco al botón que abrió
     };
 
     // Asignar evento de click a todos los botones "Cotizar"
-    cotizarButtons.forEach(btn => {
+    cotizarButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
         const card = btn.closest('.card');
         if (card) {
@@ -194,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(cotizarFormEl);
         const response = await fetch(API_URL, {
           method: 'POST',
-          body: formData
+          body: formData,
         });
         if (response.ok) {
           cotizarFormEl.reset();
@@ -219,4 +203,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
+});
